@@ -2,21 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.xdkitten.zhihudaily.ui.LastestFragment">
-    <!-- 可以触发刷新的Layout-->
+    tools:context="org.xdkitten.zhihudaily.ui.PagerFragment">
+
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/refresh_layout">
-
+        android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_theme"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rv_lastest">
+            android:layout_height="wrap_content">
         </android.support.v7.widget.RecyclerView>
-
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
-
 </FrameLayout>

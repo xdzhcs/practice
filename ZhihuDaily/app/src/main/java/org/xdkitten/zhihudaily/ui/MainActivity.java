@@ -1,10 +1,7 @@
 package org.xdkitten.zhihudaily.ui;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,11 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import org.xdkitten.zhihudaily.R;
-import org.xdkitten.zhihudaily.db.DataBaseHelper;
+import org.xdkitten.zhihudaily.constant.Constant;
+import org.xdkitten.zhihudaily.db.BufferUtil;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,11 +25,11 @@ public class MainActivity extends AppCompatActivity
     //记录上一次按下返回键的时间，用于实现双击返回退出
     private long lastPressBackTime = System.currentTimeMillis();
 
-
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private  NavigationView navigationView;
+    private int curFragment= Constant.TIME_NEWS_FRAGMENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +39,13 @@ public class MainActivity extends AppCompatActivity
         //初始化控件
         initViews();
 
-        changeFragment(new LastestFragment());
+        changeFragment(new TimeNewsFragment());
     }
     void initViews(){
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("首页");
         setSupportActionBar(toolbar);
-
-
         //弹出drawer的图标按钮
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
@@ -56,10 +55,6 @@ public class MainActivity extends AppCompatActivity
         //drawer监听器
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        DataBaseHelper dbHelper = new DataBaseHelper(this,"history.db",null,1);
-        SQLiteDatabase db=dbHelper.getWritableDatabase();
-        //db.execSQL("insert into Contents values(1,12345,' this is content')");
     }
 
     @Override
@@ -83,23 +78,25 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_day_night) {
+            if(item.getTitle().equals("夜")){
+                item.setTitle("日");
+                item.setIcon(R.drawable.ic_sun);
+            }else {
+                item.setTitle("夜");
+                item.setIcon(R.drawable.ic_moon);
+
+            }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -112,21 +109,33 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_home:
                 toolbar.setTitle(item.getTitle());
-                changeFragment(new LastestFragment());
+                if(curFragment!=Constant.TIME_NEWS_FRAGMENT) {
+                    changeFragment(TimeNewsFragment.newInstance());
+                    curFragment=Constant.TIME_NEWS_FRAGMENT;
+                }
                 break;
-            case R.id.nav_theme_post:
+            case R.id.nav_theme_news:
                 toolbar.setTitle(item.getTitle());
-                changeFragment(new ThemeFragment());
+                if(curFragment!=Constant.THEME_FRAGMENT) {
+                    changeFragment(ThemeFragment.newInstance());
+                }
                 break;
-            case R.id.nav_host_post:
+            case R.id.nav_hot_news:
                 toolbar.setTitle(item.getTitle());
-                changeFragment(new HotFragment());
+                if(curFragment!=Constant.HOT_FRAGMENT){
+                    changeFragment(HotFragment.newInstance());
+                    curFragment=Constant.HOT_FRAGMENT;
+                }
                 break;
             case R.id.nav_setting:
                 toolbar.setTitle(item.getTitle());
+                changeFragment(SettingsFragment.newInstance());
+                curFragment=Constant.SETTINGS;
                 break;
             case R.id.nav_about:
                 toolbar.setTitle(item.getTitle());
+                changeFragment(AboutFragment.newInstance());
+                curFragment=Constant.ABOUT;
                 break;
             default:break;
         }
@@ -140,5 +149,21 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.main_content_layout,fragment).commit();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BufferUtil.clearNotToday(getDateString(0));
+    }
+    /**
+     * 获取当前日期的字符串形式
+     * @param num 当前已经新闻列表已经加载的次数
+     * @return
+     */
+    private String getDateString(int num){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar calendar=Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH,-num);
+        String date=sdf.format(calendar.getTime());
+        return date;
+    }
 }

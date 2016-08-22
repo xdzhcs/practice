@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.xdkitten.zhihudaily.R;
-import org.xdkitten.zhihudaily.entity.LastestPost;
+import org.xdkitten.zhihudaily.entity.NewsItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,13 @@ import java.util.List;
 /**
  * Created by sanders on 2016/7/13.
  */
-public class LastestAdapter extends RecyclerView.Adapter<LastestAdapter.LastestHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.LastestHolder> {
 
 
-    private List<LastestPost> list=new ArrayList<LastestPost>();
+    private List<NewsItem> list=new ArrayList<NewsItem>();
     private LayoutInflater inflater;
     private Context context;
+
 
     //listener
     private OnRecyclerViewOnClickListener listener;
@@ -43,7 +44,7 @@ public class LastestAdapter extends RecyclerView.Adapter<LastestAdapter.LastestH
 
 
     //构造方法
-    public LastestAdapter(Context context, List<LastestPost> list){
+    public NewsAdapter(Context context, List<NewsItem> list){
         this.inflater= LayoutInflater.from(context);
         this.list=list;
         this.context=context;
@@ -60,18 +61,20 @@ public class LastestAdapter extends RecyclerView.Adapter<LastestAdapter.LastestH
     //讲数据与界面进行绑定的操作
     @Override
     public void onBindViewHolder(LastestHolder holder, int position) {
-        LastestPost item=list.get(position);
+        NewsItem item=list.get(position);
         holder.titleTextView.setText(item.getTitle());
         if(item.getFirstImg()==null){
-            holder.itemImageView.setImageResource(R.drawable.no_img);
+            //.itemImageView.setImageResource(R.drawable.no_img);
+            holder.itemImageView.setMaxWidth(0);
+            //holder.titleTextView.setWidth();
         }else {
+            holder.itemImageView.setMaxWidth(holder.itemImageView.getHeight());
             Glide.with(context)
                     .load(item.getFirstImg())
                     .error(R.drawable.no_img)
                     .centerCrop()
                     .into(holder.itemImageView);
         }
-
     }
 
     //获得Item的数量
@@ -96,7 +99,7 @@ public class LastestAdapter extends RecyclerView.Adapter<LastestAdapter.LastestH
 
         @Override
         public void onClick(View v) {
-            Log.i("info","LastestAdapter:onClick");
+            Log.i("info","NewsAdapter:onClick");
             if(listener!=null){
                 listener.onItemClick(v,getLayoutPosition());
             }
