@@ -148,12 +148,27 @@ public class BufferUtil {
         sql="delete from HOT_NEWS where date != ?";
         db.execSQL(sql,new Object[]{date});
     }
+    public static void clearDB(){
+        SQLiteDatabase db= App.getDbHelper().getWritableDatabase();
+        String sql="delete from THEME_NEWS";
+        db.execSQL(sql);
+        sql="delete from HOT_NEWS";
+        db.execSQL(sql);
+        sql="delete from TIME_NEWS";
+        db.execSQL(sql);
+        sql="delete from ARTICLE";
+        db.execSQL(sql);
+        sql="delete from THEME";
+        db.execSQL(sql);
+    }
     public static void clearAllBuffer(Context context){
-        clearDB(context);
+        //deleteDB(context);
+        clearDB();
         clearCathe(context);
         clearSP(context);
     }
-    public static void clearDB(Context context) {
+
+    public static void deleteDB(Context context) {
         deleteFilesByDirectory(new File("/data/data/"
                 + context.getPackageName() + "/databases"));
     }

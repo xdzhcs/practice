@@ -63,12 +63,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.LastestHolder>
     public void onBindViewHolder(LastestHolder holder, int position) {
         NewsItem item=list.get(position);
         holder.titleTextView.setText(item.getTitle());
+        //只有把这个设为true 设置的最高最宽值才能发挥作用
+        holder.itemImageView.setAdjustViewBounds(true);
         if(item.getFirstImg()==null){
-            //.itemImageView.setImageResource(R.drawable.no_img);
-            holder.itemImageView.setMaxWidth(0);
+            holder.itemImageView.setImageResource(R.drawable.no_img);
+            //holder.itemImageView.setMaxWidth(0);
+            //holder.itemImageView.setImageBitmap(null);
             //holder.titleTextView.setWidth();
         }else {
-            holder.itemImageView.setMaxWidth(holder.itemImageView.getHeight());
+            //holder.itemImageView.setMaxWidth(holder.itemImageView.getHeight());
             Glide.with(context)
                     .load(item.getFirstImg())
                     .error(R.drawable.no_img)

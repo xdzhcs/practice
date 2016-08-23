@@ -1,6 +1,7 @@
 package org.xdkitten.zhihudaily.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -8,9 +9,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.xdkitten.zhihudaily.R;
 import org.xdkitten.zhihudaily.constant.Constant;
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -87,18 +91,24 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_day_night) {
-            if(item.getTitle().equals("夜")){
+            if (item.getTitle().equals("夜")) {
                 item.setTitle("日");
                 item.setIcon(R.drawable.ic_sun);
-            }else {
+                this.setTheme(R.style.AppTheme_NoActionBar_NightTheme);
+            } else {
                 item.setTitle("夜");
                 item.setIcon(R.drawable.ic_moon);
-
+                this.setTheme(R.style.AppTheme_NoActionBar);
             }
+            return true;
+        }else if(id==android.R.id.home){
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+     */
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -118,6 +128,7 @@ public class MainActivity extends AppCompatActivity
                 toolbar.setTitle(item.getTitle());
                 if(curFragment!=Constant.THEME_FRAGMENT) {
                     changeFragment(ThemeFragment.newInstance());
+                    curFragment=Constant.THEME_FRAGMENT;
                 }
                 break;
             case R.id.nav_hot_news:
@@ -134,8 +145,20 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_about:
                 toolbar.setTitle(item.getTitle());
-                changeFragment(AboutFragment.newInstance());
-                curFragment=Constant.ABOUT;
+                MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
+                        .title("关于")
+                        .neutralText("知道了")
+                        .content(R.string.about)
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        }).build();
+
+                dialog.show();
+                //changeFragment(AboutFragment.newInstance());
+                //curFragment=Constant.ABOUT;
                 break;
             default:break;
         }

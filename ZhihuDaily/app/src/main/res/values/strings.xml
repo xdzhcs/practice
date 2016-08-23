@@ -8,4 +8,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="about">这只是个练手APP，很大程度上参考了黎赵太郎的作品《知乎小报》，感谢，让我学到了好多东西。\n关于API，本App所使用的所有API均由 知乎（Zhihu.Inc） 提供，
+        Github用户izzyleung采取非正常手段获取。
+        获取与共享之行为或有侵犯知乎权益的嫌疑。
+        若被告知需停止共享与使用，izzyleung会及时删除页面与整个项目。
+        请您暸解相关情况，并遵守知乎协议。\n
+    </string>
 </resources>

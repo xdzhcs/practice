@@ -2,12 +2,10 @@ package org.xdkitten.zhihudaily.ui;
 
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -29,7 +27,6 @@ import org.xdkitten.zhihudaily.constant.Constant;
 import org.xdkitten.zhihudaily.db.BufferUtil;
 import org.xdkitten.zhihudaily.entity.NewsItem;
 import org.xdkitten.zhihudaily.util.Api;
-import org.xdkitten.zhihudaily.util.Logger;
 import org.xdkitten.zhihudaily.util.SnackBarUtil;
 
 public class ArticleActivity extends AppCompatActivity {
@@ -178,6 +175,7 @@ public class ArticleActivity extends AppCompatActivity {
         ivHead= (ImageView) findViewById(R.id.iv_head);
         coordLayout= (CoordinatorLayout) findViewById(R.id.coord_layout);
     }
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -192,10 +190,11 @@ public class ArticleActivity extends AppCompatActivity {
             if (item.getTitle().equals("夜")) {
                 item.setTitle("日");
                 item.setIcon(R.drawable.ic_sun);
+                this.setTheme(R.style.AppTheme_NoActionBar_NightTheme);
             } else {
                 item.setTitle("夜");
                 item.setIcon(R.drawable.ic_moon);
-
+                this.setTheme(R.style.AppTheme_NoActionBar);
             }
             return true;
         }else if(id==android.R.id.home){
@@ -203,5 +202,23 @@ public class ArticleActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+         if(id==android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(webView!=null){
+            webView.stopLoading();
+        }
     }
 }

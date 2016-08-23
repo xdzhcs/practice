@@ -17,4 +17,6 @@ public class Constant {
     public static final int TIME_NEWS_FRAGMENT=3;
     public static final int SETTINGS=4;
     public static final int ABOUT=5;
+
+    public static final String IS_NIGHT_MODE="is_night_mode";
 }
