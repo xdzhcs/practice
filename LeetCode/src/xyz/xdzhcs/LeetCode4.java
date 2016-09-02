@@ -1,5 +1,7 @@
-```
-public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+package xyz.xdzhcs;
+
+public class LeetCode4 {
+	public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int num=nums1.length+nums2.length;
         int i=0,j=0,cnt=0,n1=0,n2=0;
         while(cnt<num/2+1&&i<nums1.length&&j<nums2.length){
@@ -31,11 +33,11 @@ public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         }
         //System.out.println("n1:"+n1+" n2:"+n2);
         if(num%2==0){
-        	//Èç¹ûÁ½¸öÊý×éµÄ×ÜÊýÎªÅ¼Êý,ÔòÖÐÎ»ÊýÎªµÚn/2ºÍµÚn/2+1¸öÊýµÄÆ½¾ùÊý,´Ó1¿ªÊ¼
+        	//å¦‚æžœä¸¤ä¸ªæ•°ç»„çš„æ€»æ•°ä¸ºå¶æ•°,åˆ™ä¸­ä½æ•°ä¸ºç¬¬n/2å’Œç¬¬n/2+1ä¸ªæ•°çš„å¹³å‡æ•°,ä»Ž1å¼€å§‹
         	return (n1+n2)/2.0;
         }else {
-			//Èç¹ûÁ½¸öÊý×éµÄ×ÜÊýÎªÆæÊý,ÔòÖÐÎ»ÊýÎªµÚn/2+1¸öÊý,´Ó1¿ªÊ¼
+			//å¦‚æžœä¸¤ä¸ªæ•°ç»„çš„æ€»æ•°ä¸ºå¥‡æ•°,åˆ™ä¸­ä½æ•°ä¸ºç¬¬n/2+1ä¸ªæ•°,ä»Ž1å¼€å§‹
         	return n2/1.0;
 		}
     }
-```
+}

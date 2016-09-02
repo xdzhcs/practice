@@ -1,20 +1,22 @@
-```
-public int lengthOfLongestSubstring(String s) {
+package xyz.xdzhcs;
+
+public class LeetCode3 {
+	public int lengthOfLongestSubstring(String s) {
         boolean[] flag=new boolean[80];
         int begin=0;
         int max=0;
         for(int i=0;i<s.length();){
         	if(flag[s.charAt(i)-48]==false){
-        		//Èç¹û×Ö´®ÖÐÃ»ÓÐ³öÏÖ¸Ã×ÖÄ¸£¬Ôò±ê¼ÇÎªÒÑ³öÏÖ
+        		//å¦‚æžœå­—ä¸²ä¸­æ²¡æœ‰å‡ºçŽ°è¯¥å­—æ¯ï¼Œåˆ™æ ‡è®°ä¸ºå·²å‡ºçŽ°
         		flag[s.charAt(i)-48]=true;
         		i++;
         	}else {
-				//Èç¹û×Ó´®ÖÖÒÑ¾­³öÏÖ¸Ã×ÖÄ¸£¬ÔòËãµ±Ç°×Ó´®³¤¶È£¬²¢Óë×î´óÖµ½øÐÐ±È½Ï
+				//å¦‚æžœå­ä¸²ç§å·²ç»å‡ºçŽ°è¯¥å­—æ¯ï¼Œåˆ™ç®—å½“å‰å­ä¸²é•¿åº¦ï¼Œå¹¶ä¸Žæœ€å¤§å€¼è¿›è¡Œæ¯”è¾ƒ
         		int length=i-begin;
         		if(length>max){
         			max=length;
         		}
-        		//begin×Ô¼Ó£¬²¢ÇÒ°Ñ¶ÔÓ¦µÄ×Ö·û±ê¼ÇÎªÃ»³öÏÖ
+        		//beginè‡ªåŠ ï¼Œå¹¶ä¸”æŠŠå¯¹åº”çš„å­—ç¬¦æ ‡è®°ä¸ºæ²¡å‡ºçŽ°
         		while(true){
         			flag[s.charAt(begin)-48]=false;
         			begin++;
@@ -36,4 +38,4 @@ public int lengthOfLongestSubstring(String s) {
 		}
 		return max;
     }
-```
+}
